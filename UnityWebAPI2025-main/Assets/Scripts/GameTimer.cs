@@ -9,8 +9,6 @@ namespace Mirror.Examples.NetworkRoom
     {
         [SyncVar] public float timeRemaining = 60.0f;
 
-        public TMP_Text timerText;
-
         public TMP_Text winnerText;
 
 
@@ -21,8 +19,8 @@ namespace Mirror.Examples.NetworkRoom
 
             timeRemaining -= Time.deltaTime;
 
-            timerText.text = Mathf.RoundToInt(timeRemaining).ToString();
 
+            winnerText.text = "";
             winnerText.gameObject.SetActive(false);
 
             if (timeRemaining <= 0)
@@ -30,6 +28,11 @@ namespace Mirror.Examples.NetworkRoom
                 EndGame();
                 timeRemaining = 0;
             }
+        }
+
+        void OnGUI()
+        {
+            GUI.Box(new Rect(775f, 50f, 50f, 25f), $"{Mathf.RoundToInt(timeRemaining)}");
         }
 
         [Server]
