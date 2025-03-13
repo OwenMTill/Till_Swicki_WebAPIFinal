@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/MultiPlayerRoomStart.unity
+    guid: 478b185282d84ea48b39498d10666e2b
+  - enabled: 0
+    path: Assets/Scenes/MultiPlayerRoom.unity
+    guid: af4df257392eb3649a3d07712cc2f6e1
+  - enabled: 0
+    path: Assets/Scenes/MultiplayerScene.unity
+    guid: 1f8433721cde09a4a8b08118515eb64d
+  - enabled: 1
+    path: Assets/Mirror/Examples/Room/Scenes/MirrorRoomOffline.unity
+    guid: 9e6f14982412b2545a0911ebaaa46a23
+  - enabled: 1
+    path: Assets/Mirror/Examples/Room/Scenes/MirrorRoomOnline.unity
+    guid: d7a6763559b31854586c9e49916273ef
+  - enabled: 1
+    path: Assets/Mirror/Examples/Room/Scenes/MirrorRoomGame.unity
+    guid: 48478f4d522f96945b8396f376299d3a
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_UseUCBPForAssetBundles: 0
