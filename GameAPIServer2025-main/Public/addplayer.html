@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Player Manual</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="navagation-bar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/addplayer">Add Player</a></li>
+            <li><a href="/update">Edit Player</a></li>
+            <li><a href="/leaderboard">Leaderboard</a></li>
+        </ul>
+    </div>
+    <h2>Create Player Entry</h2>
+    <form action="/sentdatatodb" method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username"name="username"><br>
+
+        <label for="score">Score:</label><br>
+        <input type="number" id="score"name="score"><br>
+
+        <label for="highscore">High score:</label><br>
+        <input type="number" id="highscore"name="highscore"><br>
+
+        <label for="gamesplayed">Games Played:</label><br>
+        <input type="number" id="gamesplayed"name="gamesplayed"><br>
+
+        <label for="win">Wins:</label><br>
+        <input type="number" id="win"name="win"><br>
+
+        <label for="loss">Loss:</label><br>
+        <input type="number" id="loss"name="loss"><br><br>
+
+        <button type="submit">Add Player</button>
+    </form>
+
+</body>
+</html>

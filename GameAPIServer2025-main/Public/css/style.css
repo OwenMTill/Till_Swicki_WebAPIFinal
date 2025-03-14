@@ -1,0 +1,28 @@
+body {
+    background-color:black;
+    color:white;
+}
+ul{
+    list-style-type: none;
+}
+#navagation-bar ul {
+    background-color: white;
+    list-style-type:none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+} 
+
+#navagation-bar li {
+    float: left;
+    background-color: white;
+} 
+#navagation-bar li a{
+    display: block;
+    color:black;
+    padding: 10px;
+    text-decoration: none;
+}
+#navagation-bar li a:hover{
+    background-color: lightgray;
+}
