@@ -95,7 +95,7 @@ public class FetchData : MonoBehaviour
         }
     }
 
-    public IEnumerator GetDataByUsername(string json, string username = "")
+    public IEnumerator GetDataByUsername(string json, int index, string username = "")
     {
         string url = serverUrl + "/" + username;
         Debug.Log(url);
@@ -119,7 +119,7 @@ public class FetchData : MonoBehaviour
             //Extract username
             string newUsername = ExtractUsername(response);
 
-            SetPlayer();
+            SetPlayer(index);
 
             if (!string.IsNullOrEmpty(newUsername))
             {
@@ -132,7 +132,9 @@ public class FetchData : MonoBehaviour
             //Handles Error
             Debug.Log("Error: " + request.error);
             Debug.Log("Making new Player");
+            
             send.SendData();
+            
             yield return null;
         }
     }
@@ -154,7 +156,7 @@ public class FetchData : MonoBehaviour
 
         StartCoroutine(GetDataByID(json, playerid));
     }
-    public void SetupPlayerSearchData(string name)
+    public void SetupPlayerSearchData(string name, int index)
     {
         player = new PlayerData();
 
@@ -163,12 +165,14 @@ public class FetchData : MonoBehaviour
         string json = JsonUtility.ToJson(player);
         Debug.Log(json);
 
-        StartCoroutine(GetDataByUsername(json, name));
+        StartCoroutine(GetDataByUsername(json, index, name));
     }
 
-    public void SetPlayer()
+    public void SetPlayer(int index)
     {
-        playerData.GetComponent<PlayerDataHolder>().data = player;
+        Debug.Log("index "+index);
+        Debug.Log("player " + player.username);
+        playerData.GetComponent<PlayerDataHolder>().data.Add(player);
     }
 
     string ExtractPlayerId(string jsonResponse)

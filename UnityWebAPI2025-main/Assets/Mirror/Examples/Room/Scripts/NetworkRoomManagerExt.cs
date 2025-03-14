@@ -61,16 +61,16 @@ namespace Mirror.Examples.NetworkRoom
             PlayerScore playerScore = gamePlayer.GetComponent<PlayerScore>();
             playerScore.index = roomPlayer.GetComponent<NetworkRoomPlayer>().index;
 
-            roomPlayer.GetComponent<NetworkPlayerUsername>().username = clientPlayerData.data.username;
+            roomPlayer.GetComponent<NetworkPlayerUsername>().username = clientPlayerData.data[playerScore.index].username;
             playerScore.username = roomPlayer.GetComponent<NetworkPlayerUsername>().username;
 
-            roomPlayer.GetComponent<NetworkPlayerUsername>().gamePlayed = (uint)clientPlayerData.data.gamesplayed;
+            roomPlayer.GetComponent<NetworkPlayerUsername>().gamePlayed = (uint)clientPlayerData.data[playerScore.index].gamesplayed;
             playerScore.gamePlayed = roomPlayer.GetComponent<NetworkPlayerUsername>().gamePlayed;
 
-            roomPlayer.GetComponent<NetworkPlayerUsername>().win = (uint)clientPlayerData.data.win;
+            roomPlayer.GetComponent<NetworkPlayerUsername>().win = (uint)clientPlayerData.data[playerScore.index].win;
             playerScore.win = roomPlayer.GetComponent<NetworkPlayerUsername>().win;
             
-            roomPlayer.GetComponent<NetworkPlayerUsername>().loss = (uint)clientPlayerData.data.loss;
+            roomPlayer.GetComponent<NetworkPlayerUsername>().loss = (uint)clientPlayerData.data[playerScore.index].loss;
             playerScore.loss = roomPlayer.GetComponent<NetworkPlayerUsername>().loss;
 
             

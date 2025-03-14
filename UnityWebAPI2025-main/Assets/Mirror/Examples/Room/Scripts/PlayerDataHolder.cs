@@ -1,10 +1,15 @@
-using UnityEditor.UI;
+using Mirror.Examples.NetworkRoom;
+using System.Linq;
+using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerDataHolder : MonoBehaviour
 {
-    public PlayerData data;
-    
+    public List<PlayerData> data;
+    public GameObject roomManager;
+
+    public int maxIndex = 0;
     public string username =" ";
     public int score =0 ;
     public int highScore = 0;
@@ -24,18 +29,28 @@ public class PlayerDataHolder : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    
+    private void Start()
+    {
+        data = new List<PlayerData>();
+    }
+
     private void Update()
     {
-        if(data != null)
+        //roomManager = GameObject.Find("NewworkRoomManager");
+        maxIndex = roomManager.GetComponent<NetworkRoomManagerExt>().clientIndex;
+        if (data != null) 
         {
-            username = data.username;
-            score = data.score;
-            highScore = data.highscore;
-            gamePlayed = data.gamesplayed;
-            win = data.win;
-            loss = data.loss;
+            for (int i = 0; i < maxIndex; i++)
+            {
+                username = data[i].username;
+                score = data[i].score;
+                highScore = data[i].highscore;
+                gamePlayed = data[i].gamesplayed;
+                win = data[i].win;
+                loss = data[i].loss;
+            }
         }
+        
         
     }
 }

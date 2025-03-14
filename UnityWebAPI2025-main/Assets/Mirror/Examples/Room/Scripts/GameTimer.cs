@@ -71,6 +71,7 @@ namespace Mirror.Examples.NetworkRoom
             {
                 PlayerData tempPlayer = new PlayerData();
                 Debug.Log("Player index:" + player.index);
+
                 routes.GetComponent<FindPlayerData>().SearchForPlayerWithPlayerScore(player.index);
 
                 Debug.Log("Games played" + routes.GetComponent<FetchData>().player.gamesplayed);
@@ -78,6 +79,7 @@ namespace Mirror.Examples.NetworkRoom
 
                 //tempPlayer = playerData.GetComponent<PlayerDataHolder>().data;
                 Debug.Log(tempPlayer.gamesplayed);
+                
                 tempPlayer.gamesplayed = (int)player.gamePlayed + 1;
                 tempPlayer.score = (int)player.score;
                 if (player.username != winnerName)
@@ -87,6 +89,7 @@ namespace Mirror.Examples.NetworkRoom
                 else
                 {
                     tempPlayer.win = (int)player.win + 1;
+                
                 }
                 Debug.Log("Player name before the update: "+tempPlayer.username);
                 routes.GetComponent<UpdatePlayerData>().SetupPlayerData(tempPlayer.username, tempPlayer.score, tempPlayer.highscore, tempPlayer.gamesplayed, tempPlayer.win, tempPlayer.loss);

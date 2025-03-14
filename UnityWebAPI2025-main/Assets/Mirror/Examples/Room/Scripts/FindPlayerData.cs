@@ -1,7 +1,6 @@
 using Mirror.Examples.MultipleAdditiveScenes;
 using Mirror.Examples.NetworkRoom;
 using TMPro;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +10,10 @@ public class FindPlayerData : MonoBehaviour
     public TMP_InputField playerid;
     public FetchData fetch;
     [SerializeField]
-    GameObject playerData;
+    public GameObject playerData;
+
+    public NetworkRoomManagerExt roomManager;
+    public int maxIndex = 0;
     //GameObject playerScore;
     [SerializeField]
     Mirror.Examples.NetworkRoom.PlayerScore[] players;
@@ -31,13 +33,24 @@ public class FindPlayerData : MonoBehaviour
     //    }
     //}
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        roomManager = GameObject.Find("NetworkRoomManager").GetComponent<NetworkRoomManagerExt>();
+        maxIndex = roomManager.clientIndex;
+    }
     void Start()
     {
+        
         Debug.Log("Scene num: " + SceneManager.GetActiveScene().buildIndex);
+        
         playerData = GameObject.Find("DataHolder");
         if(playerData != null && playerData.GetComponent<PlayerDataHolder>().username != " ")
         {
-            name.text = playerData.GetComponent<PlayerDataHolder>().data.username;
+            for(int i = 0; i<maxIndex; i++)
+            {
+                name.text = playerData.GetComponent<PlayerDataHolder>().data[i].username;
+            }
+            
         }
 
         if(SceneManager.GetActiveScene().buildIndex == 2)
@@ -55,18 +68,16 @@ public class FindPlayerData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2 && !ranOnce)
+        //roomManager = GameObject.Find("NewworkRoomManager").GetComponent<NetworkRoomManagerExt>();
+        
+        if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             
             players = FindObjectsByType<Mirror.Examples.NetworkRoom.PlayerScore>(FindObjectsSortMode.None);
             //playerScore = GameObject.Find("GamePlayerReliable");
             foreach (Mirror.Examples.NetworkRoom.PlayerScore go in players)
             {
-                
-            }
-            if(players.Length >0)
-            {
-                ranOnce = true;
+                Debug.Log(go.name);
             }
         }
     }
@@ -78,12 +89,12 @@ public class FindPlayerData : MonoBehaviour
         }
         else
         {
-            fetch.SetupPlayerSearchData(name.text);
+            fetch.SetupPlayerSearchData(name.text, 0);
         }
     }
 
     public void SearchForPlayerWithPlayerScore(int index)
     {
-        fetch.SetupPlayerSearchData(players[index].GetComponent<Mirror.Examples.NetworkRoom.PlayerScore>().username);
+        fetch.SetupPlayerSearchData(players[index].GetComponent<Mirror.Examples.NetworkRoom.PlayerScore>().username, index);
     }
 }

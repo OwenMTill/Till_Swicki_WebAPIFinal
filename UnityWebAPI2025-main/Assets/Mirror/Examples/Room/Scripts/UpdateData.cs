@@ -20,11 +20,11 @@ public class UpdateData : MonoBehaviour
 
     public void UpdatePlayerData()
     {
-        update.SetupPlayerData(holder.data.username,
-                             holder.data.score,
-                             holder.data.highscore,
-                             holder.data.gamesplayed,
-                             holder.data.win,
-                             holder.data.loss);
+        //update.SetupPlayerData(holder.data.username,
+        //                     holder.data.score,
+        //                     holder.data.highscore,
+        //                     holder.data.gamesplayed,
+        //                     holder.data.win,
+        //                     holder.data.loss);
     }
 }

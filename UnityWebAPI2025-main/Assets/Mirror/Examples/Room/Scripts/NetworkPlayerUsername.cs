@@ -21,10 +21,11 @@ public class NetworkPlayerUsername : NetworkRoomPlayer
     }
     public override void OnGUI()
     {
-        username = clientPlayerData.GetComponent<PlayerDataHolder>().data.username;
-        gamePlayed = (uint)clientPlayerData.GetComponent<PlayerDataHolder>().data.gamesplayed;
-        win = (uint)clientPlayerData.GetComponent<PlayerDataHolder>().data.win;
-        loss = (uint)clientPlayerData.GetComponent<PlayerDataHolder>().data.loss;
+        
+        username = clientPlayerData.GetComponent<PlayerDataHolder>().data[index].username;
+        gamePlayed = (uint)clientPlayerData.GetComponent<PlayerDataHolder>().data[index].gamesplayed;
+        win = (uint)clientPlayerData.GetComponent<PlayerDataHolder>().data[index].win;
+        loss = (uint)clientPlayerData.GetComponent<PlayerDataHolder>().data[index].loss;
         base.OnGUI();
         DrawPlayerReadyState();
     }

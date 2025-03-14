@@ -540,6 +540,8 @@ MonoBehaviour:
   playerid: {fileID: 2038517854}
   fetch: {fileID: 1911455140}
   playerData: {fileID: 0}
+  roomManager: {fileID: 2008127831}
+  maxIndex: 0
   players: []
 --- !u!1 &639890310
 GameObject:
@@ -1844,6 +1846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   post: {fileID: 1911455142}
+  roomManager: {fileID: 0}
 --- !u!114 &1911455144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2082,6 +2085,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c020f9c87352464c9b40eeb0a153b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomManager: {fileID: 2008127829}
+  maxIndex: 0
   username: ' '
   score: 0
   highScore: 0
