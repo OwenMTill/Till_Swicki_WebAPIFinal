@@ -11,9 +11,14 @@ public class FetchData : MonoBehaviour
 {
     string serverUrl = "http://localhost:3000/player";
     List<PlayerData> playerList;
-    PlayerData player;
-    public GameObject playerData;
+    public PlayerData player;
+    GameObject playerData;
+    public SendPlayerData send;
 
+    private void Awake()
+    {
+        playerData = GameObject.Find("DataHolder");
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,7 +49,7 @@ public class FetchData : MonoBehaviour
                 playerList = JsonConvert.DeserializeObject<List<PlayerData>>(json);
 
                 //Print out the player info
-                //Debug.Log($"Name: {player.name}, Score: {player.score}, Level: {player.level}");
+                //Debug.Log($"Name: {player.username}, Score: {player.score}, Level: {player.gamesplayed}");
                 Debug.Log(playerList);
             }
             else
@@ -72,7 +77,9 @@ public class FetchData : MonoBehaviour
             string response = request.downloadHandler.text;
             Debug.Log($"Success: {response}");
 
-            //Extract playerid
+            player = JsonUtility.FromJson<PlayerData>(response);
+
+                //Extract playerid
             string newPlayerId = ExtractPlayerId(response);
             if (!string.IsNullOrEmpty(newPlayerId))
             {
@@ -88,6 +95,48 @@ public class FetchData : MonoBehaviour
         }
     }
 
+    public IEnumerator GetDataByUsername(string json, string username = "")
+    {
+        string url = serverUrl + "/" + username;
+        Debug.Log(url);
+        byte[] jsonToSend = Encoding.UTF8.GetBytes(json);
+        UnityWebRequest request = new UnityWebRequest(url, "GET");
+        request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+
+        yield return request.SendWebRequest();
+        
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            string response = request.downloadHandler.text;
+
+            player = JsonUtility.FromJson<PlayerData>(response);
+
+            Debug.Log($"Username search Success: {response}");
+
+            //Extract username
+            string newUsername = ExtractUsername(response);
+
+            SetPlayer();
+
+            if (!string.IsNullOrEmpty(newUsername))
+            {
+                Debug.Log("Username: " + newUsername);
+            }
+            yield return null;
+        }
+        else
+        {
+            //Handles Error
+            Debug.Log("Error: " + request.error);
+            Debug.Log("Making new Player");
+            send.SendData();
+            yield return null;
+        }
+    }
+
     public void StartFetch()
     {
         StartCoroutine(GetData());
@@ -97,20 +146,29 @@ public class FetchData : MonoBehaviour
     {
         player = new PlayerData();
 
-        player.name = name;
+        player.username = name;
         
 
         string json = JsonUtility.ToJson(player);
         Debug.Log(json);
-        StartCoroutine(GetDataByID(json, playerid));
 
+        StartCoroutine(GetDataByID(json, playerid));
+    }
+    public void SetupPlayerSearchData(string name)
+    {
+        player = new PlayerData();
+
+        player.username = name;
+
+        string json = JsonUtility.ToJson(player);
+        Debug.Log(json);
+
+        StartCoroutine(GetDataByUsername(json, name));
     }
 
-    public void GetPlayer()
+    public void SetPlayer()
     {
-        playerData.transform.GetChild(0).GetComponent<TMP_Text>().text = player.name;
-        playerData.transform.GetChild(1).GetComponent<TMP_Text>().text = player.score.ToString();
-        playerData.transform.GetChild(2).GetComponent<TMP_Text>().text = player.level.ToString();
+        playerData.GetComponent<PlayerDataHolder>().data = player;
     }
 
     string ExtractPlayerId(string jsonResponse)
@@ -119,14 +177,22 @@ public class FetchData : MonoBehaviour
         if (index < 12) return "";
         int endIndex = jsonResponse.IndexOf("\"", index);
         return jsonResponse.Substring(index, endIndex - index);
-
+    }
+    string ExtractUsername(string jsonResponse)
+    {
+        int index = jsonResponse.IndexOf("\"username\":\"") + 12;
+        if (index < 12) return "";
+        int endIndex = jsonResponse.IndexOf("\"", index);
+        return jsonResponse.Substring(index, endIndex - index);
     }
 }
 
 public class PlayerData 
 {
-    public string name;
+    public string username;
     public int score;
-    public int level;
-
+    public int highscore;
+    public int gamesplayed;
+    public int win;
+    public int loss;
 }

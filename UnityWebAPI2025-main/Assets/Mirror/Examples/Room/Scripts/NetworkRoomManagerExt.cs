@@ -15,6 +15,9 @@ namespace Mirror.Examples.NetworkRoom
         public GameObject rewardPrefab;
         public byte poolSize = 10;
 
+        [SerializeField]
+        public PlayerDataHolder clientPlayerData;
+
         public static new NetworkRoomManagerExt singleton => NetworkManager.singleton as NetworkRoomManagerExt;
 
         /// <summary>
@@ -57,6 +60,20 @@ namespace Mirror.Examples.NetworkRoom
         {
             PlayerScore playerScore = gamePlayer.GetComponent<PlayerScore>();
             playerScore.index = roomPlayer.GetComponent<NetworkRoomPlayer>().index;
+
+            roomPlayer.GetComponent<NetworkPlayerUsername>().username = clientPlayerData.data.username;
+            playerScore.username = roomPlayer.GetComponent<NetworkPlayerUsername>().username;
+
+            roomPlayer.GetComponent<NetworkPlayerUsername>().gamePlayed = (uint)clientPlayerData.data.gamesplayed;
+            playerScore.gamePlayed = roomPlayer.GetComponent<NetworkPlayerUsername>().gamePlayed;
+
+            roomPlayer.GetComponent<NetworkPlayerUsername>().win = (uint)clientPlayerData.data.win;
+            playerScore.win = roomPlayer.GetComponent<NetworkPlayerUsername>().win;
+            
+            roomPlayer.GetComponent<NetworkPlayerUsername>().loss = (uint)clientPlayerData.data.loss;
+            playerScore.loss = roomPlayer.GetComponent<NetworkPlayerUsername>().loss;
+
+            
             return true;
         }
 
